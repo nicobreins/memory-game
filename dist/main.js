@@ -1,4 +1,44 @@
-const cardArr = [
+// const levelArr = [
+//     {
+//         level: 1,
+
+//     }
+// ]
+
+
+const cardArrL1 = [
+    {
+        name: 'fries',
+        img: 'dist/images/fries.png'
+    },
+
+    {
+        name: 'cheeseburger',
+        img: 'dist/images/cheeseburger.png'
+    },
+
+    {
+        name: 'hotdog',
+        img: 'dist/images/hotdog.png'
+    },
+
+    {
+        name: 'fries',
+        img: 'dist/images/fries.png'
+    },
+
+    {
+        name: 'cheeseburger',
+        img: 'dist/images/cheeseburger.png'
+    },
+
+    {
+        name: 'hotdog',
+        img: 'dist/images/hotdog.png'
+    },      
+]
+
+const cardArrL2 = [
     {
         name: 'fries',
         img: 'dist/images/fries.png'
@@ -62,7 +102,7 @@ const cardArr = [
     
 ]
 
-cardArr.sort(() => 0.5 - Math.random());
+cardArrL1.sort(() => 0.5 - Math.random());
 
 const gridDisply = document.querySelector('#grid');
 const result = document.querySelector('#result');
@@ -71,8 +111,8 @@ let cardsChosenIds = [];
 let cardsWon = [];
 
 
-function createBoard(){
-    for(let i = 0; i < cardArr.length; i++){
+function createBoard(lvl){
+    for(let i = 0; i < cardArrL1.length; i++){
         const card = document.createElement('img');
         card.setAttribute('src', 'dist/images/blank.png');
         card.setAttribute('data-id', i);
@@ -81,7 +121,7 @@ function createBoard(){
     }
 }
 
-createBoard();
+// createBoard();
 
 function checkMatch(){
     const cards = document.querySelectorAll('#grid img');
@@ -92,7 +132,8 @@ function checkMatch(){
         cards[optionOneId].setAttribute('src' , 'dist/images/blank.png');
         cards[optionOTwoId].setAttribute('src' , 'dist/images/blank.png');
         alert('You have clicked the same image!');
-    } else if(cardChosen[0] == cardChosen[1]){
+    }
+    else if(cardChosen[0] == cardChosen[1]){
         alert('You got a match!')
         cards[optionOneId].setAttribute('src' , 'dist/images/white.png');
         cards[optionOTwoId].setAttribute('src' , 'dist/images/white.png');
@@ -130,4 +171,23 @@ function flipCard(){
             checkMatch()
         }, 200);
     }
+}
+
+const levelsCont = document.querySelector('#levels');
+
+function appendLevels(){
+    for(let i = 0; i < 2; i++){
+        const levelBtn = document.createElement('button');
+        levelBtn.textContent = `Level ${i+1}`;
+        levelBtn.addEventListener('click', levelSelect);
+        levelsCont.append(levelBtn);
+    }
+}
+
+appendLevels()
+
+function levelSelect(level){
+    // alert('sex');
+    createBoard(level);
+
 }
