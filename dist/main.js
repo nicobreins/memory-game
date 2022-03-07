@@ -102,7 +102,7 @@ const cardArrL2 = [
     
 ]
 
-cardArrL1.sort(() => 0.5 - Math.random());
+// cardArrL1.sort(() => 0.5 - Math.random());
 
 const gridDisply = document.querySelector('#grid');
 const result = document.querySelector('#result');
@@ -112,7 +112,9 @@ let cardsWon = [];
 
 
 function createBoard(lvl){
-    for(let i = 0; i < cardArrL1.length; i++){
+lvl.sort(() => 0.5 - Math.random());
+
+    for(let i = 0; i < lvl.length; i++){
         const card = document.createElement('img');
         card.setAttribute('src', 'dist/images/blank.png');
         card.setAttribute('data-id', i);
@@ -123,7 +125,7 @@ function createBoard(lvl){
 
 // createBoard();
 
-function checkMatch(){
+function checkMatch(lvl){
     const cards = document.querySelectorAll('#grid img');
     const optionOneId = cardsChosenIds[0];
     const optionOTwoId = cardsChosenIds[1];
@@ -151,24 +153,25 @@ function checkMatch(){
     cardChosen = [];
     cardsChosenIds = []
 
-    if(cardsWon.length == cardArr.length/2){
+    if(cardsWon.length == lvl.length/2){
         result.innerHTML += ' Congrats you found them all!'
     }
 
 }
 
 function flipCard(){
+    const lvlSel = eval(gridDisply.className);
     const cardId = this.getAttribute('data-id');
-    cardArr[cardId].name;
-    cardChosen.push(cardArr[cardId].name);
+    lvlSel[cardId].name;
+    cardChosen.push(lvlSel[cardId].name);
     cardsChosenIds.push(cardId);
 
-    this.setAttribute('src', cardArr[cardId].img);
+    this.setAttribute('src', lvlSel[cardId].img);
     
 
     if(cardChosen.length === 2){
         setTimeout(() => {
-            checkMatch()
+            checkMatch(lvlSel)
         }, 200);
     }
 }
@@ -179,6 +182,7 @@ function appendLevels(){
     for(let i = 0; i < 2; i++){
         const levelBtn = document.createElement('button');
         levelBtn.textContent = `Level ${i+1}`;
+        levelBtn.setAttribute('id', `lvl-${i+1}`)
         levelBtn.addEventListener('click', levelSelect);
         levelsCont.append(levelBtn);
     }
@@ -187,7 +191,12 @@ function appendLevels(){
 appendLevels()
 
 function levelSelect(level){
-    // alert('sex');
-    createBoard(level);
+    // alert(this.id.slice(-1));
+    let levelClicked = eval(`cardArrL${this.id.slice(-1)}`);
+    console.log(levelClicked);
+    gridDisply.innerHTML = '';
+    gridDisply.className = '';
+    gridDisply.classList.add(`cardArrL${this.id.slice(-1)}`);
+    createBoard(levelClicked);
 
 }
