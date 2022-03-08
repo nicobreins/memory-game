@@ -198,5 +198,4 @@ function levelSelect(level){
     gridDisply.className = '';
     gridDisply.classList.add(`cardArrL${this.id.slice(-1)}`);
     createBoard(levelClicked);
-
 }
